@@ -12,6 +12,19 @@ else
   colorscheme darcula
 endif
 
+set cursorline
+
+@sdfsd
+
+syntax match coffeeThis "@"
+highlight def link coffeeThis Keyword
+
+"hi def link coffeeSpecialIndent Statement
+"hi def link coffeeObjAssignment Statement
+"hi def link coffeeOperator Statement
+
+au BufRead,BufNewFile *.coffee syn match Normal /"\k\@<!@\k\S*"/
+
 " Remove right hand side scroll bar.
 set guioptions-=r
 
@@ -27,16 +40,20 @@ au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
 " Save files on focus change.
 autocmd FocusLost * silent! wa
 
+au FocusGained *.coffee :SyntasticCheck
+
 " CtrlP Ignore Files.
-set wildignore+=*/public/**/*
-set wildignore+=*/.idea/**/*
-set wildignore+=*/node_modules/**/*
-set wildignore+=*/.mimosa/**/*
-set wildignore+=*/vagrant/puppet/**/*
+set wildignore+=*/public/*
+set wildignore+=*/.idea/*
+set wildignore+=*/logs/*
+set wildignore+=*/node_modules/*
+set wildignore+=*/.mimosa/*
+set wildignore+=*/vagrant/puppet/*
 
 " Setup Syntastic checkers.
 let g:syntastic_coffee_checkers = ["coffee"]
 let g:syntastic_ejs_checkers = ["html"]
+let g:syntastic_jade_checkers = ["jade"]
 
 " CtrlP default to vertical split.
 "let g:ctrlp_prompt_mappings = {
