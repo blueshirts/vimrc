@@ -12,18 +12,14 @@ else
   colorscheme darcula
 endif
 
+" Highlight the current line.
 set cursorline
 
-@sdfsd
+hi clear coffeeParens
+hi clear coffeeSpecialIdent
 
-syntax match coffeeThis "@"
-highlight def link coffeeThis Keyword
-
-"hi def link coffeeSpecialIndent Statement
-"hi def link coffeeObjAssignment Statement
-"hi def link coffeeOperator Statement
-
-au BufRead,BufNewFile *.coffee syn match Normal /"\k\@<!@\k\S*"/
+" F3 will display the highlight underneath the cursor.
+map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 
 " Remove right hand side scroll bar.
 set guioptions-=r
