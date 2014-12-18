@@ -24,7 +24,7 @@ set go-=L
 set smartcase
 
 " Leave insert mode after focus changes.
-au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
+"au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
 
 " Save files on focus change.
 autocmd FocusLost * silent! wa
