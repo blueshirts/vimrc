@@ -8,6 +8,11 @@
 syntax on
 colorscheme darcula
 
+"
+" Update the default font.
+"
+set guifont=Menlo:h12
+
 " Highlight the current line.
 set cursorline
 
@@ -24,7 +29,7 @@ set go-=L
 set smartcase
 
 " Leave insert mode after focus changes.
-"au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
+au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
 
 " Save files on focus change.
 autocmd FocusLost * silent! wa
@@ -35,7 +40,7 @@ au FocusGained *.coffee :SyntasticCheck
 "
 " Set the ack search defaults to ignore certain directories.
 "
-let ack_ignore = "--ignore-dir=public --ignore-dir=node_modules --ignore-dir=.idea --ignore-dir=vagrant --ignore-dir=.mimosa --ignore-file=is:tags"
+let ack_ignore = "--ignore-dir=public --ignore-dir=node_modules --ignore-dir=.idea --ignore-dir=vagrant --ignore-dir=.mimosa --ignore-dir=assets/javascripts/vendor --ignore-file=is:tags"
 let g:ackprg = "ack -s -H --nocolor --nogroup --column --smart-case --follow " . ack_ignore
 
 " CtrlP Ignore Files.
@@ -43,6 +48,7 @@ set wildignore+=*/public/*
 set wildignore+=*/.idea/*
 set wildignore+=*/logs/*
 set wildignore+=*/node_modules/*
+set wildignore+=*/bower_components/*
 set wildignore+=*/.mimosa/*
 set wildignore+=*/vagrant/puppet/*
 
