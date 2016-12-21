@@ -9,12 +9,24 @@ syntax on
 colorscheme darcula
 
 "
+" Update the statusLine.
+"
+set statusline=%f\ %m\ %rLine:%l/%L[%p%%]Col:%vBuf:#%n[%b][0x%B]\ %{fugitive#statusline()}
+
+" Git Open Plugin.
+
+
+"
 " Update the default font.
 "
-set guifont=Menlo:h12
+set guifont=Monaco:h12
+"set guifont=Menlo:h12
 
 " Highlight the current line.
 set cursorline
+
+" Specify the line length.
+set colorcolumn=100
 
 " F3 will display the highlight underneath the cursor.
 map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
@@ -34,23 +46,41 @@ au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
 " Save files on focus change.
 autocmd FocusLost * silent! wa
 
+" Automatically reload file changes.
+set autoread
+
 " Run a syntax check when the editor gains focus.
 au FocusGained *.coffee :SyntasticCheck
+
+" Disable hiding of quotes in JSON files.
+let g:vim_json_syntax_conceal = 0
 
 "
 " Set the ack search defaults to ignore certain directories.
 "
-let ack_ignore = "--ignore-dir=public --ignore-dir=node_modules --ignore-dir=.idea --ignore-dir=vagrant --ignore-dir=.mimosa --ignore-dir=assets/javascripts/vendor --ignore-file=is:tags"
+let ack_ignore="--ignore-dir=public"
+let ack_ignore.=" --ignore-dir=node_modules"
+let ack_ignore.=" --ignore-dir=docs"
+let ack_ignore.=" --ignore-dir=.idea"
+let ack_ignore.=" --ignore-dir=vagrant"
+let ack_ignore.=" --ignore-dir=.mimosa"
+let ack_ignore.=" --ignore-dir=assets/javascripts/vendor"
+let ack_ignore.=" --ignore-dir=assets/stylesheets/vendor/"
+let ack_ignore.=" --ignore-file=is:tags"
+let ack_ignore.=" --ignore-dir=bower_components"
+let ack_ignore.=" --ignore-dir=logs --ignore-file=is:get-pip.py"
 let g:ackprg = "ack -s -H --nocolor --nogroup --column --smart-case --follow " . ack_ignore
 
 " CtrlP Ignore Files.
-set wildignore+=*/public/*
-set wildignore+=*/.idea/*
-set wildignore+=*/logs/*
-set wildignore+=*/node_modules/*
-set wildignore+=*/bower_components/*
-set wildignore+=*/.mimosa/*
-set wildignore+=*/vagrant/puppet/*
+"set wildignore+=*/public/*
+"set wildignore+=*/.idea/*
+"set wildignore+=*/logs/*
+"set wildignore+=*/node_modules/*
+"set wildignore+=*/bower_components/*
+"set wildignore+=*/.mimosa/*
+"set wildignore+=*/vagrant/puppet/*
+" CtrlP should ignore .gitignore files.
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Setup Syntastic checkers.
 let g:syntastic_coffee_checkers = ["coffee"]
@@ -59,10 +89,14 @@ let g:syntastic_jade_checkers = ["jade"]
 let g:syntastic_javascript_checkers = ["jshint"]
 
 " CtrlP default to vertical split.
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<c-v>', '<2-LeftMouse>'],
-    \ 'AcceptSelection("v")': ['<cr>', '<RightMouse>'],
-    \ }
+"let g:ctrlp_prompt_mappings = {
+    "\ 'AcceptSelection("e")': ['<c-v>', '<2-LeftMouse>'],
+    "\ 'AcceptSelection("v")': ['<cr>', '<RightMouse>'],
+    "\ }
+
+" easier moving of code blocks, indent and keep selection
+vnoremap < <gv
+vnoremap > >gv
 
 "
 " Map the command-p key to CtrlP.
@@ -75,11 +109,14 @@ map <D-O> :CtrlP<CR>
 au BufRead,BufNewFile *.ejs set filetype=html
 au BufRead,BufNewFile *.ejs set syntax=underscore_template
 
+" Add Javascript highlighting for jshintrc files.
+autocmd BufNewFile,BufRead *.jshintrc set syntax=javascript
+
 "
 " Camel case support.
 "
 nmap c,w c,e
-runtime plugin/camelcasemotion.vim
+runtime ~/.janus/camelcasemotion/autoload/camelcasemotion.vim
 omap i,w i,e
 xmap i,w i,e
 
