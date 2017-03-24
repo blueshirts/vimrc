@@ -11,7 +11,11 @@ colorscheme darcula
 "
 " Update the default font.
 "
-set guifont=Menlo:h12
+"set guifont=Menlo:h12
+set guifont=Monaco:h12
+
+" Set the line wrap indicator.
+set colorcolumn=100
 
 " Highlight the current line.
 set cursorline
@@ -36,6 +40,9 @@ autocmd FocusLost * silent! wa
 
 " Run a syntax check when the editor gains focus.
 au FocusGained *.coffee :SyntasticCheck
+
+" Don't hide quotes in JSON files.
+let g:vim_json_syntax_conceal = 0
 
 "
 " Set the ack search defaults to ignore certain directories.
@@ -74,6 +81,7 @@ map <D-O> :CtrlP<CR>
 "
 au BufRead,BufNewFile *.ejs set filetype=html
 au BufRead,BufNewFile *.ejs set syntax=underscore_template
+"au BufRead,BufNewFile *.cjsx set syntax=coffee
 
 "
 " Camel case support.
@@ -109,10 +117,14 @@ omap iw ie
 xmap iw ie
 
 
+" Prompt for reload the vimrc after changes.
+"au! BufWritePost .vimrc.after source %
+
+"set spell spelllang=en_us
+
 "
-" Reload the vimrc after changes.
-"
-au! BufWritePost .vimrc.after source %
+" Automatically reload files after they change.
+set autoread
 
 "
 " Start in the projects directory.
