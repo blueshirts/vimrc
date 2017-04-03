@@ -103,6 +103,8 @@ vnoremap > >gv
 "
 map <D-O> :CtrlP<CR>
 
+map <D-e> :CtrlPMRU<CR>
+
 "
 " Add underscore template syntax highlighting for .ejs files.
 "
