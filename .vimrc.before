@@ -1,4 +1,5 @@
-# Disable the coffeescript plugin.
-#"call janus#disable_plugin('coffeescript'):
-# Disable the snippets plugin.
-"call janus#disable_plugin('vim-snippets')
+" Disable the coffeescript plugin.
+call janus#disable_plugin('coffeescript')
+
+" Disable the snippets plugin.
+call janus#disable_plugin('vim-snippets')
